@@ -11,13 +11,13 @@ function computerPlay() {
 }
 
 function playerPrompt(round) {
-    let response;
+    let userChoice;
     if (round === 0) {
-        response = prompt(`Welcome to your digital rock-paper-scissors game!\n\nHere you get to play against the computer. You need to win 3 rounds to claim victory. The rules are simple: rock beats scissors, scissors beats paper, and paper beats rock.\n\nEnter your choice (rock, paper, or scissors):`);
+        userChoice = prompt(`Welcome to your digital rock-paper-scissors game!\n\nHere you get to play against the computer. You need to win 3 rounds to claim victory. The rules are simple: rock beats scissors, scissors beats paper, and paper beats rock.\n\nEnter your choice (rock, paper, or scissors):`);
     } else {
-        response = prompt("Enter your choice (rock, paper, or scissors):");
+        userChoice = prompt("Enter your choice (rock, paper, or scissors):");
     }
-    return response === null ? null : response.toLowerCase().trim();
+    return userChoice === null ? null : userChoice.toLowerCase().trim();
 }
 
 function playRound(playerSelection, computerSelection) {
