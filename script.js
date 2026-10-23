@@ -19,7 +19,9 @@ function playerPrompt(round) {
 }
 
 function playRound(playerSelection, computerSelection) {
-    if (playerSelection === computerSelection) {
+    if (!['rock', 'paper', 'scissors'].includes(playerSelection)) {
+        return { message: `Invalid choice: ${playerSelection}. Please enter rock, paper, or scissors.`, winner: null };
+    } else if (playerSelection === computerSelection) {
         return { message: `Computer plays ${computerSelection}. It's a tie!`, winner: null };
     } else if ((playerSelection === 'rock' && computerSelection === 'scissors') ||
         (playerSelection === 'paper' && computerSelection === 'rock') ||
