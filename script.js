@@ -4,34 +4,43 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+const CHOICES = ['rock', 'paper', 'scissors'];
+const BEATS = { rock: 'scissors', paper: 'rock', scissors: 'paper' };
+
+function validInput(input) {
+    return CHOICES.includes(input);
+}
+
 function computerPlay() {
-    const choices = ['rock', 'paper', 'scissors'];
-    const randomIndex = getRandomInt(choices.length);
-    return choices[randomIndex];
+    const randomIndex = getRandomInt(CHOICES.length);
+    return CHOICES[randomIndex];
 }
 
 function playerPrompt(round) {
-    let userChoice;
-    if (round === 0) {
-        userChoice = prompt(`Welcome to your digital rock-paper-scissors game!\n\nHere you get to play against the computer. You need to win 3 rounds to claim victory. The rules are simple: rock beats scissors, scissors beats paper, and paper beats rock.\n\nEnter your choice (rock, paper, or scissors):`);
-    } else {
-        userChoice = prompt("Enter your choice (rock, paper, or scissors):");
+    let message = round === 0
+    ? "Here you get to play against the computer. You need to win 3 rounds to claim victory. The rules are simple: rock beats scissors, scissors beats paper, and paper beats rock.\n\nEnter your choice (rock, paper, or scissors):"
+    : "Enter your choice (rock, paper, or scissors):";
+
+    while (true) {
+        const input = prompt(message);
+        if (input === null) return null;
+
+        const choice = input.toLowerCase().trim();
+        if (validInput(choice)) return choice;
+
+        message = `Invalid choice: ${input}. Please enter rock, paper, or scissors.`;
     }
-    return userChoice === null ? null : userChoice.toLowerCase().trim();
 }
 
 function playRound(playerSelection, computerSelection) {
-    if (!['rock', 'paper', 'scissors'].includes(playerSelection)) {
-        return { message: `Invalid choice: ${playerSelection}. Please enter rock, paper, or scissors.`, winner: null };
-    } else if (playerSelection === computerSelection) {
+    if (playerSelection === computerSelection) {
         return { message: `Computer plays ${computerSelection}. It's a tie!`, winner: null };
-    } else if ((playerSelection === 'rock' && computerSelection === 'scissors') ||
-        (playerSelection === 'paper' && computerSelection === 'rock') ||
-        (playerSelection === 'scissors' && computerSelection === 'paper')) {
-        return { message: `Computer plays ${computerSelection}. You win!`, winner: 'player' };
-    } else {
-        return { message: `Computer plays ${computerSelection}. Computer wins!`, winner: 'computer' };
     }
+
+    if (BEATS[playerSelection] === computerSelection) {
+        return { message: `Computer plays ${computerSelection}. You win!`, winner: 'player' };
+    }
+    return { message: `Computer plays ${computerSelection}. Computer wins!`, winner: 'computer' };
 }
 
 function game() {
